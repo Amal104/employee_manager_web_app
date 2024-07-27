@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "237999752841",
+    "project_id": "employee-manager-web-app-11dee",
+    "storage_bucket": "employee-manager-web-app-11dee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237999752841:android:31ae40bbbe967892af6858",
+        "android_client_info": {
+          "package_name": "com.example.employee_manager_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALVTh0XjaepUpLNv3ZYPK1HBXqh1MP-2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
