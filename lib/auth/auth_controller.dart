@@ -9,6 +9,14 @@ import '../constants.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
+  Rxn<User> firebaseUser = Rxn<User>();
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    firebaseUser.bindStream(auth.authStateChanges());
+  }
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -93,4 +101,6 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     await auth.signOut();
   }
+
+  bool get isLoggedIn => firebaseUser.value != null;
 }
