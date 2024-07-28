@@ -1,17 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:employee_manager_web/constants.dart';
+import 'package:employee_manager_web/screens/emp_Details_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/emp_details_controller.dart';
 import '../../controller/employee_list_controller.dart';
 
 class TabHomepage extends StatelessWidget {
-  const TabHomepage({
+  TabHomepage({
     super.key,
     required this.employeeController,
   });
 
   final EmployeeController employeeController;
+  final EmployeeDetailsController employeeDetailsController =
+      Get.put(EmployeeDetailsController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,8 @@ class TabHomepage extends StatelessWidget {
         ),
       ),
       body: Obx(() {
-        if (employeeController.isLoading.value) {
+        if (employeeController.isLoading.value ||
+            employeeController.employeeList.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         } else {
           return ListView.builder(
@@ -47,7 +52,16 @@ class TabHomepage extends StatelessWidget {
               final employee = employeeController.employeeList[index];
               return InkWell(
                 onHover: (value) {},
-                onTap: () {},
+                onTap: () {
+                  employeeDetailsController
+                      .fetchEmployeeDetailsData(employee.id);
+                  if (employeeDetailsController.employeeDetails.isNotEmpty) {
+                    Get.to(() => EmpDetailsPage());
+                  } else {
+                    Get.snackbar(
+                        "Client error", "Response has a status code of 429");
+                  }
+                },
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: width(context) * 0.035,
@@ -62,7 +76,7 @@ class TabHomepage extends StatelessWidget {
                         leading: Hero(
                           tag: profileimage,
                           child: CircleAvatar(
-                            radius: height(context) * 0.01,
+                            radius: height(context) * 0.05,
                             backgroundImage:
                                 const CachedNetworkImageProvider(profileimage),
                           ),
