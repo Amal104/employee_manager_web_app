@@ -1,15 +1,15 @@
+import 'package:employee_manager_web/responsive/Responsive_Layout.dart';
 import 'package:flutter/material.dart';
 
-class Homepage extends StatefulWidget {
+class Homepage extends StatelessWidget {
   const Homepage({super.key});
 
   @override
-  State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ResponsiveLayout(
+      mobileBody: Scaffold(),
+      tabletBody: Scaffold(),
+      desktopBody: Scaffold(),
+    );
   }
 }

@@ -11,9 +11,9 @@ class Loginpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
-      mobileBody: const MobileLoginScreen(),
-      tabletBody: const TabLoginScreen(),
-      desktopBody: const WebLoginScreen(),
+      mobileBody:  MobileLoginScreen(),
+      tabletBody:  TabLoginScreen(),
+      desktopBody: WebLoginScreen(),
     );
   }
 }
