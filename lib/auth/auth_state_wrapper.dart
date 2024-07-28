@@ -15,7 +15,7 @@ class AuthStateWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         } else if (snapshot.hasData) {
-          return const Homepage();
+          return Homepage();
         } else {
           return const Loginpage();
         }

@@ -40,7 +40,7 @@ class AuthController extends GetxController {
       Timer(
         const Duration(seconds: 2),
         () {
-          Get.off(() => const Homepage());
+          Get.off(() => Homepage());
         },
       );
       emailController.clear();
@@ -78,7 +78,7 @@ class AuthController extends GetxController {
       Timer(
         const Duration(seconds: 2),
         () {
-          Get.off(() => const Homepage());
+          Get.off(() => Homepage());
         },
       );
       emailController.clear();
