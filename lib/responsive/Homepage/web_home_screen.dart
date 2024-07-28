@@ -50,7 +50,7 @@ class WebHomeScreen extends StatelessWidget {
                   vertical: height(context) * 0.030,
                 ),
                 child: Card(
-                  elevation: 10,
+                  elevation: 9.5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
