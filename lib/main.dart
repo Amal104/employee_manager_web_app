@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'auth/auth_controller.dart';
 import 'screens/HomePage.dart';
+import 'screens/LoginPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,15 +30,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.find<AuthController>();
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Employee',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: Obx(() {
-      //   return authController.isLoggedIn ? Homepage() : const Loginpage();
-      // }),
-      home: Homepage(),
+      home: Obx(() {
+        return authController.isLoggedIn ? Homepage() : const Loginpage();
+      }),
+      // home: Homepage(),
     );
   }
 }
