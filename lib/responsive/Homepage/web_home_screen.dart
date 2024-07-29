@@ -3,6 +3,7 @@ import 'package:employee_manager_web/model/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../auth/auth_controller.dart';
 import '../../constants.dart';
 import '../../controller/emp_details_controller.dart';
 import '../../controller/employee_list_controller.dart';
@@ -16,6 +17,7 @@ class WebHomeScreen extends StatelessWidget {
   final EmployeeController employeeController;
   final EmployeeDetailsController employeeDetailsController =
       Get.put(EmployeeDetailsController());
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +49,40 @@ class WebHomeScreen extends StatelessWidget {
         surfaceTintColor: Colors.transparent,
         foregroundColor: Colors.transparent,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'Employees',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: height(context) * 0.045,
+        title: Padding(
+          padding: EdgeInsets.only(left: width(context) * 0.03),
+          child: Text(
+            'Employees',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: height(context) * 0.045,
+            ),
           ),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: width(context) * 0.04),
+            child: IconButton(
+                onPressed: () {
+                  authController.signOut();
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.black,
+                )),
+          )
+        ],
       ),
       body: Obx(() {
         if (employeeController.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+              child: Column(
+            children: [
+              CircularProgressIndicator(),
+              Text("429 please refresh the screen if it keeps loading")
+            ],
+          ));
         } else {
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -237,16 +261,13 @@ class WebHomeScreen extends StatelessWidget {
                                       backgroundColor: Colors.black,
                                     ),
                                     onPressed: () {
-                                      employeeDetailsController
-                                          .fetchEmployeeDetailsData(
-                                              employee.id);
-                                      if (employeeDetailsController
-                                          .employeeDetails.isNotEmpty) {
-                                        Get.to(() => EmpDetailsPage());
-                                      } else {
-                                        Get.snackbar("Client error",
-                                            "Response has a status code of 429");
-                                      }
+                                      Get.to(() => EmpDetailsPage(
+                                            age:
+                                                employee.employeeAge.toString(),
+                                            name: employee.employeeName,
+                                            salary: employee.employeeSalary
+                                                .toString(),
+                                          ));
                                     },
                                     label: const Padding(
                                       padding: EdgeInsets.all(10.0),

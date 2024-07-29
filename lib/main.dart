@@ -1,10 +1,6 @@
-import 'package:employee_manager_web/auth/auth_state_wrapper.dart';
-import 'package:employee_manager_web/firebase_options.dart';
-import 'package:employee_manager_web/screens/LoginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'auth/auth_controller.dart';
 import 'screens/HomePage.dart';
 
