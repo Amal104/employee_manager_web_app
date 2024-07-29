@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:employee_manager_web/constants.dart';
+import 'package:employee_manager_web/model/employee_model.dart';
 import 'package:employee_manager_web/responsive/Homepage/web_home_screen.dart';
 import 'package:employee_manager_web/screens/emp_Details_Page.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'package:get/get.dart';
 
 import '../../controller/emp_details_controller.dart';
 import '../../controller/employee_list_controller.dart';
-import '../../widgets/new_emp_dialog.dart';
+import '../../widgets/new_emp_tab_dialog.dart';
+import '../../widgets/new_emp_web_dialog.dart';
+import '../../widgets/tab_update_emp.dart';
 
 class TabHomepage extends StatelessWidget {
   TabHomepage({
@@ -30,125 +33,7 @@ class TabHomepage extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return Padding(
-                  padding: const EdgeInsets.all(50.0),
-                  child: Dialog(
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: width(context) * 0.05,
-                        vertical: width(context) * 0.05,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Add new employee",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height(context) * 0.03,
-                          ),
-                          TextField(
-                            controller: employeeDetailsController.name,
-                            keyboardType: TextInputType.name,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Enter employee name",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                              ),
-                              fillColor: Colors.black,
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height(context) * 0.01,
-                          ),
-                          TextField(
-                            controller: employeeDetailsController.age,
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Enter employee age",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                              ),
-                              fillColor: Colors.black,
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height(context) * 0.01,
-                          ),
-                          TextField(
-                            controller: employeeDetailsController.salary,
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Enter employee salary",
-                              hintStyle: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                              ),
-                              fillColor: Colors.black,
-                              filled: true,
-                              border: InputBorder.none,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height(context) * 0.03,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              shape: const LinearBorder(),
-                            ),
-                            onPressed: () {
-                              if (employeeDetailsController.name.text != "") {
-                                employeeDetailsController.createEmployee();
-                              } else {
-                                Get.snackbar("Invalid", "Enter valid data");
-                              }
-                            },
-                            onHover: (value) {},
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Submit",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return NewEmpTabDialog(employeeDetailsController: employeeDetailsController);
               },
             );
           },
@@ -216,7 +101,26 @@ class TabHomepage extends StatelessWidget {
                         ),
                         subtitle: Text(
                             'Age: ${employee.employeeAge} - Salary: ${employee.employeeSalary}'),
-                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return TabUpdateEmp(employee: employee, employeeDetailsController: employeeDetailsController);
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.edit),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Icon(Icons.keyboard_arrow_right),
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import '../constants.dart';
 import '../controller/emp_details_controller.dart';
 
-class NewEmpDialog extends StatelessWidget {
-  const NewEmpDialog({
+class NewEmpWebDialog extends StatelessWidget {
+  const NewEmpWebDialog({
     super.key,
     required this.employeeDetailsController,
   });
@@ -112,7 +112,7 @@ class NewEmpDialog extends StatelessWidget {
                   shape: const LinearBorder(),
                 ),
                 onPressed: () {
-                  if (employeeDetailsController.name.text != "") {
+                  if (employeeDetailsController.name.text != "" && employeeDetailsController.age.text != "" && employeeDetailsController.salary.text != "") {
                     employeeDetailsController.createEmployee();
                   } else {
                     Get.snackbar("Invalid", "Enter valid data");

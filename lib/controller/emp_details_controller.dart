@@ -16,6 +16,10 @@ class EmployeeDetailsController extends GetxController {
   TextEditingController age = TextEditingController();
   TextEditingController salary = TextEditingController();
 
+  TextEditingController newname = TextEditingController();
+  TextEditingController newage = TextEditingController();
+  TextEditingController newsalary = TextEditingController();
+
   void fetchEmployeeDetailsData(int id) async {
     try {
       isLoading(true);
@@ -41,16 +45,55 @@ class EmployeeDetailsController extends GetxController {
         salary: salary.text,
         age: age.text,
       );
-      await createNewEmployee(employee);
-      Get.snackbar('Success', 'Employee created successfully');
+      await EmpManage().createNewEmployee(employee);
+      Get.snackbar('Success', 'Employee created successfully',
+          colorText: Colors.green);
       Get.back();
       name.clear();
       salary.clear();
       age.clear();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to create employee');
+      Get.snackbar('Error', 'Failed to create employee', colorText: Colors.red);
     } finally {
       isLoading(false);
     }
   }
+
+  void updateEmployee(int id) async {
+    try {
+      isLoading(true);
+      Employee employee = Employee(
+        name: newname.text,
+        salary: newsalary.text,
+        age: newage.text,
+      );
+      await EmpManage().updateNewEmployee(employee, id);
+      newname.clear();
+      newsalary.clear();
+      newage.clear();
+      Get.snackbar('Success', 'Employee updated successfully',
+          colorText: Colors.green);
+      Get.back();
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to create employee', colorText: Colors.red);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+  void deleteEmployee(int id) async {
+    try {
+      isLoading(true);
+      await EmpManage().deleteEmployee(id);
+      Get.snackbar('Success', 'Employee deleted successfully',
+          colorText: Colors.green);
+      Get.back();
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to delete employee', colorText: Colors.red);
+    } finally {
+      isLoading(false);
+    }
+  }
+
 }

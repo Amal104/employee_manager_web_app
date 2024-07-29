@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:employee_manager_web/model/employee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,8 @@ import '../../constants.dart';
 import '../../controller/emp_details_controller.dart';
 import '../../controller/employee_list_controller.dart';
 import '../../screens/emp_Details_Page.dart';
-import '../../widgets/new_emp_dialog.dart';
+import '../../widgets/new_emp_web_dialog.dart';
+import '../../widgets/web_update_emp.dart';
 
 class WebHomeScreen extends StatelessWidget {
   WebHomeScreen({super.key, required this.employeeController});
@@ -33,7 +35,7 @@ class WebHomeScreen extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context1) {
-                return NewEmpDialog(
+                return NewEmpWebDialog(
                     employeeDetailsController: employeeDetailsController);
               },
             );
@@ -99,7 +101,7 @@ class WebHomeScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 30),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -130,33 +132,120 @@ class WebHomeScreen extends StatelessWidget {
                                   fontSize: height(context) * 0.02,
                                 ),
                               ),
+                              SizedBox(
+                                height: height(context) * 0.02,
+                              ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ElevatedButton.icon(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        backgroundColor: Colors.black,
-                                      ),
-                                      onPressed: () {
-                                        employeeDetailsController
-                                            .fetchEmployeeDetailsData(
-                                                employee.id);
-                                        if (employeeDetailsController
-                                            .employeeDetails.isNotEmpty) {
-                                          Get.to(() => EmpDetailsPage());
-                                        } else {
-                                          Get.snackbar("Client error",
-                                              "Response has a status code of 429");
-                                        }
-                                      },
-                                      label: const Padding(
-                                        padding: EdgeInsets.all(10.0),
-                                        child: Icon(
-                                          Icons.keyboard_arrow_right,
+                                  Row(
+                                    children: [
+                                      ElevatedButton.icon(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context1) {
+                                              return AlertDialog(
+                                                title: const Text(
+                                                    "Do you want to delete this employee?"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              5),
+                                                      color: Colors.red,
+                                                      child: const Text(
+                                                        "Cancel",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: const Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      employeeDetailsController
+                                                          .deleteEmployee(
+                                                              employee.id);
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        label: const Icon(
+                                          Icons.delete,
                                           color: Colors.white,
                                         ),
-                                      ))
+                                      ),
+                                      ElevatedButton.icon(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: const CircleBorder(),
+                                          backgroundColor: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context1) {
+                                              return WebUpdateEmp(
+                                                  employee: employee,
+                                                  employeeDetailsController:
+                                                      employeeDetailsController);
+                                            },
+                                          );
+                                        },
+                                        label: const Icon(
+                                          Icons.edit,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    onPressed: () {
+                                      employeeDetailsController
+                                          .fetchEmployeeDetailsData(
+                                              employee.id);
+                                      if (employeeDetailsController
+                                          .employeeDetails.isNotEmpty) {
+                                        Get.to(() => EmpDetailsPage());
+                                      } else {
+                                        Get.snackbar("Client error",
+                                            "Response has a status code of 429");
+                                      }
+                                    },
+                                    label: const Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Icon(
+                                        Icons.keyboard_arrow_right,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               )
                             ],
