@@ -14,7 +14,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
-      mobileBody: Scaffold(),
+      mobileBody: TabHomepage(employeeController: employeeController),
       tabletBody: TabHomepage(employeeController: employeeController),
       desktopBody: WebHomeScreen(employeeController: employeeController),
     );

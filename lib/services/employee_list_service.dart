@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../constants.dart';
 import '../model/employee_model.dart';
+import '../model/new_emp_model.dart';
 
 class ApiService {
   final Dio dio = Dio();
@@ -61,4 +62,6 @@ class ApiService {
     }
     return data;
   }
+
+  
 }

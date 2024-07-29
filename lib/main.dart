@@ -38,9 +38,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Obx(() {
-        return authController.isLoggedIn ? Homepage() : const Loginpage();
-      }),
+      // home: Obx(() {
+      //   return authController.isLoggedIn ? Homepage() : const Loginpage();
+      // }),
+      home: Homepage(),
     );
   }
 }

@@ -3,21 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constants.dart';
+import '../../controller/emp_details_controller.dart';
 import '../../controller/employee_list_controller.dart';
+import '../../screens/emp_Details_Page.dart';
+import '../../widgets/new_emp_dialog.dart';
 
 class WebHomeScreen extends StatelessWidget {
-  const WebHomeScreen({super.key, required this.employeeController});
+  WebHomeScreen({super.key, required this.employeeController});
 
   final EmployeeController employeeController;
+  final EmployeeDetailsController employeeDetailsController =
+      Get.put(EmployeeDetailsController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(20),
-        child: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {},
+        child: FloatingActionButton.extended(
+          backgroundColor: Colors.deepPurple,
+          label: const Text(
+            "Add new emloyee",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context1) {
+                return NewEmpDialog(
+                    employeeDetailsController: employeeDetailsController);
+              },
+            );
+          },
         ),
       ),
       appBar: AppBar(
@@ -118,7 +138,18 @@ class WebHomeScreen extends StatelessWidget {
                                         shape: const CircleBorder(),
                                         backgroundColor: Colors.black,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        employeeDetailsController
+                                            .fetchEmployeeDetailsData(
+                                                employee.id);
+                                        if (employeeDetailsController
+                                            .employeeDetails.isNotEmpty) {
+                                          Get.to(() => EmpDetailsPage());
+                                        } else {
+                                          Get.snackbar("Client error",
+                                              "Response has a status code of 429");
+                                        }
+                                      },
                                       label: const Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: Icon(
