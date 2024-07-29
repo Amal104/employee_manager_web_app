@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -114,7 +113,7 @@ class NewEmpTabDialog extends StatelessWidget {
                   if (employeeDetailsController.name.text != "" &&
                       employeeDetailsController.age.text != "" &&
                       employeeDetailsController.salary.text != "") {
-                    employeeDetailsController.createEmployee();
+                    employeeDetailsController.createEmployee(context);
                   } else {
                     Get.snackbar("Invalid", "Enter valid data");
                   }

@@ -55,15 +55,13 @@ class EmpManage {
     }
   }
 
-
-  
   Future<void> deleteEmployee(int id) async {
     final dio = Dio();
     try {
       if (kDebugMode) {
         print('$baseUrl/delete/$id');
       }
-      final response = await dio.put(
+      final response = await dio.delete(
         '$baseUrl/delete/$id',
       );
       if (response.statusCode == 200) {
@@ -76,8 +74,10 @@ class EmpManage {
         throw Exception('Failed to delete employee');
       }
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       throw Exception('Failed to delete employee: $e');
     }
   }
-
 }

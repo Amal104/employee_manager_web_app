@@ -101,7 +101,10 @@ class WebHomeScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -132,8 +135,8 @@ class WebHomeScreen extends StatelessWidget {
                                   fontSize: height(context) * 0.02,
                                 ),
                               ),
-                              SizedBox(
-                                height: height(context) * 0.02,
+                              const SizedBox(
+                                height: 20,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -173,16 +176,23 @@ class WebHomeScreen extends StatelessWidget {
                                                     },
                                                   ),
                                                   TextButton(
-                                                    child: const Text(
-                                                      "Delete",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
+                                                    child: Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              5),
+                                                      color: Colors.black,
+                                                      child: const Text(
+                                                        "Delete",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
                                                       ),
                                                     ),
                                                     onPressed: () {
                                                       employeeDetailsController
                                                           .deleteEmployee(
-                                                              employee.id);
+                                                              employee.id,
+                                                              context);
                                                     },
                                                   ),
                                                 ],

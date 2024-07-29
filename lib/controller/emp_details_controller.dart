@@ -37,7 +37,7 @@ class EmployeeDetailsController extends GetxController {
     }
   }
 
-  void createEmployee() async {
+  void createEmployee(BuildContext context) async {
     try {
       isLoading(true);
       Employee employee = Employee(
@@ -48,7 +48,7 @@ class EmployeeDetailsController extends GetxController {
       await EmpManage().createNewEmployee(employee);
       Get.snackbar('Success', 'Employee created successfully',
           colorText: Colors.green);
-      Get.back();
+      Navigator.of(context).pop();
       name.clear();
       salary.clear();
       age.clear();
@@ -59,7 +59,7 @@ class EmployeeDetailsController extends GetxController {
     }
   }
 
-  void updateEmployee(int id) async {
+  void updateEmployee(int id,BuildContext context) async {
     try {
       isLoading(true);
       Employee employee = Employee(
@@ -73,7 +73,7 @@ class EmployeeDetailsController extends GetxController {
       newage.clear();
       Get.snackbar('Success', 'Employee updated successfully',
           colorText: Colors.green);
-      Get.back();
+      Navigator.of(context).pop();
     } catch (e) {
       Get.snackbar('Error', 'Failed to create employee', colorText: Colors.red);
     } finally {
@@ -81,19 +81,20 @@ class EmployeeDetailsController extends GetxController {
     }
   }
 
-
-  void deleteEmployee(int id) async {
+  void deleteEmployee(int id, BuildContext context) async {
     try {
       isLoading(true);
       await EmpManage().deleteEmployee(id);
       Get.snackbar('Success', 'Employee deleted successfully',
           colorText: Colors.green);
-      Get.back();
+      Navigator.of(context).pop();
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       Get.snackbar('Error', 'Failed to delete employee', colorText: Colors.red);
     } finally {
       isLoading(false);
     }
   }
-
 }

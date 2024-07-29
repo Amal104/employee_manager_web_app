@@ -180,7 +180,7 @@ class WebUpdateEmp extends StatelessWidget {
                           "") {
                     employeeDetailsController
                         .updateEmployee(
-                            employee.id);
+                            employee.id,context);
                   } else {
                     Get.snackbar(
                         "Invalid",

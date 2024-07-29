@@ -149,7 +149,7 @@ class TabUpdateEmp extends StatelessWidget {
                           "") {
                     employeeDetailsController
                         .updateEmployee(
-                            employee.id);
+                            employee.id,context);
                   } else {
                     Get.snackbar("Invalid",
                         "Enter valid data");

@@ -33,7 +33,8 @@ class TabHomepage extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return NewEmpTabDialog(employeeDetailsController: employeeDetailsController);
+                return NewEmpTabDialog(
+                    employeeDetailsController: employeeDetailsController);
               },
             );
           },
@@ -108,8 +109,59 @@ class TabHomepage extends StatelessWidget {
                               onPressed: () {
                                 showDialog(
                                   context: context,
+                                  builder: (context1) {
+                                    return AlertDialog(
+                                      title: const Text(
+                                          "Do you want to delete this employee?"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            color: Colors.red,
+                                            child: const Text(
+                                              "Cancel",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(5),
+                                            color: Colors.black,
+                                            child: const Text(
+                                              "Delete",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            employeeDetailsController
+                                                .deleteEmployee(
+                                                    employee.id, context);
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
                                   builder: (context) {
-                                    return TabUpdateEmp(employee: employee, employeeDetailsController: employeeDetailsController);
+                                    return TabUpdateEmp(
+                                        employee: employee,
+                                        employeeDetailsController:
+                                            employeeDetailsController);
                                   },
                                 );
                               },
